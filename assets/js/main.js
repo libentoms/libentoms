@@ -5,11 +5,21 @@
 */
 
 (function($) {
-	window.addEventListener('load', function () {
-  	const preloader = document.getElementById('preloader');
-	  preloader.style.opacity = '0';
- 	 preloader.style.pointerEvents = 'none';
- 	 setTimeout(() => preloader.remove(), 500);
+
+	window.addEventListener("load", function () {
+		const preloader = document.getElementById("preloader");
+		const body = document.body;
+
+		if (preloader) {
+			// Immediately show preloader (ensure it's visible at the start)
+			preloader.style.display = 'flex'; // Ensure it's visible immediately
+
+			// Give the spinner time to animate
+			setTimeout(() => {
+				preloader.remove(); // Remove preloader after the spinner has had time to spin
+				body.classList.remove('is-preload');
+			}, 300); // 500ms delay should give enough time for animation to be noticeable
+		}
 	});
 
 
@@ -32,11 +42,11 @@
 		});
 
 	// Play initial animations on page load.
-		$window.on('load', function() {
-			window.setTimeout(function() {
-				$body.removeClass('is-preload');
-			}, 100);
-		});
+	$window.on('load', function () {
+		window.setTimeout(function () {
+			$('#header').removeClass('is-preload');
+		}, 100); // Adjust delay if needed
+	});
 
 	// Fix: Flexbox min-height bug on IE.
 		if (browser.name == 'ie') {
